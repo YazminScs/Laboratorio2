@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql_matricula
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"   
+      MYSQL_DATABASE: matricula
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./bd/script.sql:/docker-entrypoint-initdb.d/script.sql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_matricula
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+    depends_on:
+      - mysql
